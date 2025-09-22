@@ -16,12 +16,11 @@ class DatabaseHandler:
                 conn.commit()
 
                 c.execute("INSERT INTO users (username, age, role) VALUES (?, ?, ?)", ("Nazarii", "23", "admin"))
-                c.execute("INSERT INTO users (username, age, role) VALUES (?, ?, ?)", ("Jonas", "87", "user"))
+                c.execute("INSERT INTO users (username, age, role) VALUES (?, ?, ?)", ("Jonas", "32", "user"))
 
                 conn.commit()
 
                 return c
-
         except Exception as e:
             print(e)
 
