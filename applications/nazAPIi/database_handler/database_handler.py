@@ -21,7 +21,6 @@ class DatabaseHandler:
                 conn.commit()
 
                 return c
-
         except Exception as e:
             print(e)
 
