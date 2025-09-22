@@ -5,24 +5,20 @@ on:
         branches:
             - main
 
-jobs: 
-    build: 
-        runs-on: ubuntu-latest
-        name: Build and push
-        steps:
-        - uses: actions/checkout@v4
-        - name: Install Python
-          uses: actions/setup-python@v5
-          with:
-            python-version: "3.12"
-        - name: Install dependencies
-          run: |
-            python -m pip install --upgrade pip
+jobs:
+  sync-main-to-dev:
+    runs-on: ubuntu-latest
 
-        - name: Push
-          uses: s0/git-publish-action@develop
-          env:
-            REPO: self
-            BRANCH: dev # The branch name where you want to push the assets
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
-            MESSAGE: "Build: ({sha}) {msg}" # The commit message
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # Needed to fetch all history so we can push to another branch
+
+      - name: Push main to dev
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          git pull origin main
+          git push origin main:dev
