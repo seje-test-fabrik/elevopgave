@@ -1,0 +1,14 @@
+services:
+  python-api:
+    container_name: python-api
+    build: 
+      dockerfile: ./docker/dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    environment:
+      - PYTHONPATH=/code
+
+
+    

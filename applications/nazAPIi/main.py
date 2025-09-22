@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from applications.nazAPIi.database_handler.database_handler import DatabaseHandler
+from database_handler.database_handler import DatabaseHandler
 
 database = DatabaseHandler()
 app = FastAPI()
