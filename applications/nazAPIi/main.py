@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from database_handler.database_handler import DatabaseHandler
-import os
+
 database = DatabaseHandler()
 app = FastAPI()
 
