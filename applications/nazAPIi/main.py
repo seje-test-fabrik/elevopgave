@@ -1,8 +1,12 @@
 from fastapi import FastAPI
 from database_handler.database_handler import DatabaseHandler
+import os
+
+os.listdir
 
 database = DatabaseHandler()
 app = FastAPI()
+
 
 
 @app.get("/user/")

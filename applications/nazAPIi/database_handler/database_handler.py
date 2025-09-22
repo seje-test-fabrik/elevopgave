@@ -1,4 +1,5 @@
 import sqlite3
+from schemas.users import User
 
 
 class DatabaseHandler:
@@ -27,8 +28,20 @@ class DatabaseHandler:
 
     def get_all_users(self):
         self.connection.execute("SELECT * FROM users")
-        return self.connection.fetchall()
+
+        users = []
+        for row in self.connection.fetchall():
+            user = User(id=row[0], username=row[1], age=row[2], role=row[3])
+            users.append(user)
+
+        return users
 
     def get_user_by_search(self, search_term):
         self.connection.execute("SELECT * FROM users WHERE username LIKE ?", (f"%{search_term}%",))
-        return self.connection.fetchall()
+
+        users = []
+        for row in self.connection.fetchall():
+            user = User(id=row[0], username=row[1], age=row[2], role=row[3])
+            users.append(user)
+
+        return users
