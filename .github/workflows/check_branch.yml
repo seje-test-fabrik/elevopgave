@@ -12,6 +12,6 @@ jobs:
       - name: Verify source branch
         run: |
           if [[ "${{ github.head_ref }}" != "main" ]]; then
-            echo "Only main can be merged into main."
+            echo "Only main can be merged into prod."
             exit 1
           fi
