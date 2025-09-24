@@ -2,7 +2,7 @@ name: on oush to main
 
 on:
   workflow_run:
-    workflows: ["build"]  # <-- name of the other workflow
+    workflows: ["CI"]  # <-- name of the other workflow
     branches: [main]
     types:
       - completed
