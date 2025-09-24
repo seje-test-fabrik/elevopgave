@@ -3,7 +3,7 @@ name: Enforce Merge Policy
 on:
   pull_request:
     branches:
-      - brid
+      - prid
 
 jobs:
   check-branch:
