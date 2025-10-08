@@ -26,6 +26,6 @@ jobs:
             - name: Build and push 
               uses: docker/build-push-action@v4
               with: 
-                context: ../../applications/docker
+                context: ../../applications/docker/Dockerfile
                 push: true
                 tags: ghcr.io/${{ github.repository }}/myfastapi${{ env.TAG }}
