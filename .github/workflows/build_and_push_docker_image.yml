@@ -26,6 +26,7 @@ jobs:
             - name: Build and push 
               uses: docker/build-push-action@v4
               with: 
-                context: ../../applications/docker/Dockerfile
+                context: ./applications/nazAPIi          # Folder that contains your FastAPI app code
+                file: ./applications/nazAPIi/docker/Dockerfile 
                 push: true
                 tags: ghcr.io/${{ github.repository }}/myfastapi${{ env.TAG }}
