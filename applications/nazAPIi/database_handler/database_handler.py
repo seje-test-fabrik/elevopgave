@@ -20,7 +20,7 @@ class DatabaseHandler:
 
                 conn.commit()
 
-                return c
+                return cursor
 
         except Exception as e:
             print(e)
