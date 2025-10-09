@@ -23,13 +23,10 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Set image tag
-              run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
-
             - name: Build and push 
               uses: docker/build-push-action@v4
               with: 
-                context: ./applications/nazAPIi          # Folder that contains your FastAPI app code
+                context: ./applications/nazAPIi
                 file: ./applications/nazAPIi/docker/Dockerfile 
                 push: true
-                tags: ghcr.io/${{ github.repository }}/myfastapi${{ env.TAG }}
+                tags: ghcr.io/${{ github.repository }}/myfastapi:latest
