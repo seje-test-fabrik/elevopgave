@@ -20,7 +20,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-            tag_name: v${{ github.run_number }}
+            tag_name: v1.${{ github.run_number }}
             name: Release v1.${{ github.run_number }}
             body: "Auto-release from push to main"
         env:
