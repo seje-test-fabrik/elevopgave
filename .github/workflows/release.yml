@@ -1,9 +1,12 @@
-name: Create Release on Push to Main
+name: Create Release manual relese
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch: 
+    inputs:
+      tag:
+        description: "Tag to deploy"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -20,8 +23,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-            tag_name: v1.${{ github.run_number }}
-            name: Release v1.${{ github.run_number }}
-            body: "Auto-release from push to main"
+            tag_name: ${{ inputs.tag }}
+            name: Release ${{ inputs.tag }}
+            body: "Release"
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
