@@ -7,7 +7,6 @@ app = FastAPI()
 @app.get("/user/")
 async def get_all_users():
     return database.get_all_users()
-# ali ttle change
 
 @app.get("/user/{search_term}")
 async def get_user_by_search(search_term: str):
