@@ -1,4 +1,4 @@
-name: Create Release manual relese
+name: Create manual relese
 
 on:
   workflow_dispatch: 
