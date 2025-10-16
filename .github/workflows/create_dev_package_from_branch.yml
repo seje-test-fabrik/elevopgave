@@ -29,10 +29,14 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
             
+            - name: Sanitize branch name
+              id: sanitize
+              run: echo "SANITIZED_BRANCH=${{ inputs.branch }}" | tr '/_' '-' >> $GITHUB_ENV
+
             - name: Build and push 
               uses: docker/build-push-action@v4
               with: 
                 context: ${{ inputs.branch }}/applications/nazAPIi
                 file: ${{ inputs.branch }}/applications/nazAPIi/docker/Dockerfile 
                 push: true
-                tags: ghcr.io/${{ github.repository }}/dev:test-${{ inputs.branch }}
+                tags: ghcr.io/${{ github.repository }}/dev:test-${{ env.SANITIZED_BRANCH }}
