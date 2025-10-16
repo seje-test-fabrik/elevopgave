@@ -1,0 +1,38 @@
+name: Create a package from branch
+
+on:
+  workflow_dispatch: 
+    inputs:
+      branch:
+        description: "Branch to test"
+        required: true
+        type: string
+
+
+jobs:
+    docker-build:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+
+        steps:
+            - name: Checkout source
+              uses: actions/checkout@v5
+              with:
+                path: ${{ inputs.branch }}
+
+            - name: Log into GHCR
+              uses: docker/login-action@v2
+              with: 
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build and push 
+              uses: docker/build-push-action@v4
+              with: 
+                context: ./applications/nazAPIi
+                file: ./applications/nazAPIi/docker/Dockerfile 
+                push: true
+                tags: ghcr.io/${{ github.repository }}/dev:test
