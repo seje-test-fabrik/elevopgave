@@ -9,18 +9,6 @@ services:
       - .:/code
     environment:
       - PYTHONPATH=/code
-  postgres-db:
-    container_name: postgres-db
-    image: postgres
-    restart: always
-    # set shared memory limit when using docker compose
-    shm_size: 128mb
-    environment:
-      POSTGRES_PASSWORD: example
-    ports:
-      - 5432:5432 
-    volumes:
-      - postgres:/var/lib/postgresql/data
     
 
   adminer:
