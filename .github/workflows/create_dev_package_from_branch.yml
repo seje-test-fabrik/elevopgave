@@ -31,7 +31,9 @@ jobs:
             
             - name: Sanitize branch name
               id: sanitize
-              run: echo "SANITIZED_BRANCH=${{ inputs.branch }}" | tr '/_' '-' >> $GITHUB_ENV
+              run: |
+                SAFE=$(echo "${{ inputs.branch }}" | tr '/_' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-50)
+                echo "SANITIZED_BRANCH=$SAFE" >> $GITHUB_ENV
 
             - name: Build and push 
               uses: docker/build-push-action@v4
