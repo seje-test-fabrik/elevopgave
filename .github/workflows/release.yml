@@ -41,8 +41,8 @@ jobs:
           file: ./applications/nazAPIi/docker/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:v${{ inputs.version }}
             ghcr.io/${{ github.repository }}:${{ env.COMMIT_SHA }}
+            ghcr.io/${{ github.repository }}:v${{ inputs.version }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
