@@ -36,5 +36,5 @@ jobs:
                 file: ./applications/nazAPIi/docker/Dockerfile 
                 push: true
                 tags: |
-                  ghcr.io/${{ github.repository }}:latest
                   ghcr.io/${{ github.repository }}:${{ env.COMMIT_SHA }}
+                  ghcr.io/${{ github.repository }}:latest
