@@ -1,44 +1,59 @@
 name: Create a package from branch
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
     inputs:
       branch:
         description: "Branch to test"
         required: true
         type: string
 
-
 jobs:
-    docker-build:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            packages: write
+  docker-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
-        steps:
-            - name: Checkout source
-              uses: actions/checkout@v5
-              with:
-                path: ${{ inputs.branch }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.branch }}
+          path: ${{ inputs.branch }}
 
-            - name: Log into GHCR
-              uses: docker/login-action@v2
-              with: 
-                registry: ghcr.io
-                username: ${{ github.actor }}
-                password: ${{ secrets.GITHUB_TOKEN }}
-            
-            - name: Sanitize branch name
-              id: sanitize
-              run: |
-                SAFE=$(echo "${{ inputs.branch }}" | tr '/_' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-50)
-                echo "SANITIZED_BRANCH=$SAFE" >> $GITHUB_ENV
+      - name: Log into GHCR
+        uses: docker/login-action@v2
+        with: 
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Build and push 
-              uses: docker/build-push-action@v4
-              with: 
-                context: ${{ inputs.branch }}/applications/nazAPIi
-                file: ${{ inputs.branch }}/applications/nazAPIi/docker/Dockerfile 
-                push: true
-                tags: ghcr.io/${{ github.repository }}/dev:test-${{ env.SANITIZED_BRANCH }}
+      - name: Sanitize branch name
+        id: sanitize
+        run: |
+          SAFE=$(echo "${{ inputs.branch }}" | tr '/_' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-50)
+          echo "SANITIZED_BRANCH=$SAFE" >> $GITHUB_ENV
+
+      - name: Generate timestamp
+        id: timestamp
+        run: |
+          TS=$(date -u +"%Y%m%d%H%M%S")
+          echo "TIMESTAMP=$TS" >> $GITHUB_ENV
+
+      - name: Get commit SHA
+        id: sha
+        run: |
+          cd "${{ inputs.branch }}"
+          COMMIT=$(git rev-parse --short HEAD)
+          echo "COMMIT_SHA=$COMMIT" >> $GITHUB_ENV
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ inputs.branch }}/applications/nazAPIi
+          file: ${{ inputs.branch }}/applications/nazAPIi/docker/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:dev-${{ env.SANITIZED_BRANCH }}-${{ env.TIMESTAMP }}
+            ghcr.io/${{ github.repository }}:${{ env.COMMIT_SHA }}
