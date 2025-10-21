@@ -29,4 +29,6 @@ jobs:
                 context: ./applications/nazAPIi
                 file: ./applications/nazAPIi/docker/Dockerfile 
                 push: true
-                tags: ghcr.io/${{ github.repository }}/myfastapi:latest
+                tags: |
+                  ghcr.io/${{ github.repository }}:latest
+                  ghcr.io/${{ github.repository }}:${{ env.COMMIT_SHA }}
