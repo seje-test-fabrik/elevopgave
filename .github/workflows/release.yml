@@ -1,30 +1,54 @@
-name: Create manual relese
+name: Create manual release
 
 on:
   workflow_dispatch: 
     inputs:
-      tag:
-        description: "Tag to deploy"
+      version:
+        description: "Version to release (1.x.x)"
         required: true
         type: string
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
-  create_release:
-    name: Create GitHub Release
+  release:
+    name: Create GitHub Release and Push Image
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Log into GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get commit SHA
+        id: sha
+        run: |
+          COMMIT=$(git rev-parse --short HEAD)
+          echo "COMMIT_SHA=$COMMIT" >> $GITHUB_ENV
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./applications/nazAPIi
+          file: ./applications/nazAPIi/docker/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:v${{ inputs.version }}
+            ghcr.io/${{ github.repository }}:${{ env.COMMIT_SHA }}
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-            tag_name: ${{ inputs.tag }}
-            name: Release ${{ inputs.tag }}
-            body: "Release"
+          tag_name: v${{ inputs.version }}
+          name: Release v${{ inputs.version }}
+          body: "Release v${{ inputs.version }}"
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
