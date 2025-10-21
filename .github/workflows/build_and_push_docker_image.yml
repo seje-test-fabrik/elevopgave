@@ -26,7 +26,6 @@ jobs:
             - name: Get commit SHA
               id: sha
               run: |
-                cd "main"
                 COMMIT=$(git rev-parse --short HEAD)
                 echo "COMMIT_SHA=$COMMIT" >> $GITHUB_ENV
 
