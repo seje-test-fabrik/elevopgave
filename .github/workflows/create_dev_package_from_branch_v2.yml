@@ -1,4 +1,4 @@
-name: Create a package from branch
+name: Create a package from branch V2
 
 on:
   push:
