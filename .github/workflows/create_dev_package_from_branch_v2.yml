@@ -69,8 +69,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: ${{ inputs.branch }}/applications/nazAPIi
-          file: ${{ inputs.branch }}/applications/nazAPIi/docker/Dockerfile
+          context: ./applications/nazAPIi
+          file: ./applications/nazAPIi/docker/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.TAG_VERSION }}
