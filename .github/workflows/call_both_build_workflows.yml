@@ -1,0 +1,11 @@
+name: Call both build workflows
+
+on: 
+    workflow_dispatch:
+
+jobs:
+    call-test:
+     uses: elevopgave/.github/workflows/build_and_push_docker_image_docker.yml@main
+
+    call-build:
+     uses: elevopgave/.github/workflows/build_and_push_docker_image_docker_cache.yml@main
