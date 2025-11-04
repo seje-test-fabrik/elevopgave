@@ -5,7 +5,7 @@ on:
 
 jobs:
     call-test:
-     uses: ${{ github.repository }}/.github/workflows/build_and_push_docker_image_docker.yml@main
+     uses: seje-test-fabrik/elevopgave/.github/workflows/build_and_push_docker_image.yml@main
 
     call-build:
-     uses: ${{ github.repository }}/.github/workflows/build_and_push_docker_image_docker_cache.yml@main
+     uses: seje-test-fabrik/elevopgave/.github/workflows/build_and_push_docker_image_docker_cache.yml@main
