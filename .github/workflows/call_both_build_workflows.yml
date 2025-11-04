@@ -3,6 +3,10 @@ name: Call both build workflows
 on: 
     workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write 
+
 jobs:
     call-test:
      uses: seje-test-fabrik/elevopgave/.github/workflows/build_and_push_docker_image.yml@main
