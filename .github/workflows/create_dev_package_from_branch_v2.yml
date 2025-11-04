@@ -27,6 +27,9 @@ jobs:
           ref: ${{ inputs.branch }}
           path: ${{ inputs.branch }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Install Python
         uses: actions/setup-python@v5
         with:
@@ -75,3 +78,5 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.TAG_VERSION }}
             ghcr.io/${{ github.repository }}:${{ github.sha }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
