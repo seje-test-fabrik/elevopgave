@@ -2,7 +2,7 @@ name: CI
 on: push
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: dao-nb-0458
     steps:
       - uses: actions/checkout@v4
       - name: Install Python
